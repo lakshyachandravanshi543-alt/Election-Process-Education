@@ -90,6 +90,7 @@ document.addEventListener('DOMContentLoaded', () => {
         
         const contentDiv = document.createElement('div');
         contentDiv.className = 'message-content';
+        contentDiv.setAttribute('tabindex', '0'); // Accessibility: make focusable
         
         if (isHtml) {
             contentDiv.innerHTML = content;
@@ -104,6 +105,11 @@ document.addEventListener('DOMContentLoaded', () => {
         
         chatHistoryContainer.appendChild(msgDiv);
         scrollToBottom();
+        
+        // Focus for screen readers on new system message
+        if (sender === 'system') {
+            contentDiv.focus();
+        }
     }
 
     function showTypingIndicator() {

@@ -264,6 +264,11 @@ body {
     border-radius: var(--radius-lg);
     font-size: 0.95rem;
     line-height: 1.6;
+    outline: none;
+}
+
+.message-content:focus-visible {
+    box-shadow: 0 0 0 3px var(--primary);
 }
 
 .system-message .message-content {
