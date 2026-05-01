@@ -220,11 +220,13 @@ body {
     display: flex;
     gap: 1rem;
     max-width: 85%;
-    animation: fadeIn 0.3s ease;
+    animation: fadeIn 0.4s cubic-bezier(0.16, 1, 0.3, 1) forwards;
+    opacity: 0;
+    transform: translateY(15px);
+    position: relative;
 }
 
 @keyframes fadeIn {
-    from { opacity: 0; transform: translateY(10px); }
     to { opacity: 1; transform: translateY(0); }
 }
 
@@ -354,6 +356,35 @@ body {
 .send-button svg {
     width: 20px;
     height: 20px;
+}
+
+/* TTS Button (Wow Factor Accessibility) */
+.tts-button {
+    background: transparent;
+    border: 1px solid var(--border);
+    border-radius: 50%;
+    width: 32px;
+    height: 32px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    color: var(--text-secondary);
+    cursor: pointer;
+    align-self: flex-end;
+    margin-bottom: 0.5rem;
+    transition: all 0.2s ease;
+}
+
+.tts-button:hover {
+    background-color: var(--primary);
+    color: white;
+    border-color: var(--primary);
+}
+
+.tts-button.speaking {
+    color: var(--accent);
+    animation: pulse 1.5s infinite;
+    border-color: var(--accent);
 }
 
 /* Typing Indicator */

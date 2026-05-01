@@ -103,6 +103,33 @@ document.addEventListener('DOMContentLoaded', () => {
         msgDiv.appendChild(avatar);
         msgDiv.appendChild(contentDiv);
         
+        // Accessibility: Voice Assistant (Web Speech API)
+        if (sender === 'system') {
+            const ttsButton = document.createElement('button');
+            ttsButton.className = 'tts-button';
+            ttsButton.setAttribute('aria-label', 'Read aloud');
+            ttsButton.innerHTML = `<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="icon"><polygon points="11 5 6 9 2 9 2 15 6 15 11 19 11 5"></polygon><path d="M19.07 4.93a10 10 0 0 1 0 14.14M15.54 8.46a5 5 0 0 1 0 7.07"></path></svg>`;
+            
+            // Extract raw text without markdown/html tags for speech
+            const rawText = contentDiv.innerText || contentDiv.textContent;
+            
+            ttsButton.addEventListener('click', () => {
+                if ('speechSynthesis' in window) {
+                    window.speechSynthesis.cancel(); // Stop any current speech
+                    const utterance = new SpeechSynthesisUtterance(rawText);
+                    utterance.rate = 1.0;
+                    utterance.pitch = 1.0;
+                    window.speechSynthesis.speak(utterance);
+                    
+                    ttsButton.classList.add('speaking');
+                    utterance.onend = () => ttsButton.classList.remove('speaking');
+                } else {
+                    alert('Sorry, your browser does not support text-to-speech.');
+                }
+            });
+            msgDiv.appendChild(ttsButton);
+        }
+        
         chatHistoryContainer.appendChild(msgDiv);
         scrollToBottom();
         
